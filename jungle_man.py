@@ -1,49 +1,69 @@
 import pygame.math
-
+from level import Platform
 from constants import *
 
 vec = pygame.math.Vector2
 
+g = 60
 
-class Jungleman:
-    def __init__(self):
-        self.img_left = img_jungleman
-        self.img_right = pygame.transform.flip(img_jungleman, True, False)
+
+class Jungleman(pygame.sprite.Sprite):
+    def __init__(self, spawn):
+        super().__init__()
+        self.img_right = img_jungleman
+        self.img_left = pygame.transform.flip(img_jungleman, True, False)
         self.VEL = 400
         self.acc = vec(0, 0)
         self.vel = vec(0, 0)
-        self.pos = vec(spawn_points)
+        self.pos = vec(*spawn) * block_size
         self.direction = "right"
+        self.surface = self.img_right
+        self.rect = self.surface.get_rect()
 
-    def update_pos(self):
-        self.acc = vec(0, 0.5)
+    def update_position(self, platforms):
+        """Physics"""
+        self.acc = vec(0, 1)
         self.vel += self.acc
-        if self.pos.y < down:
-            self.pos += self.vel + 0.5 * self.acc
-        else:
-            self.pos.y = down
+        self.pos += self.vel + 0.5 * self.acc
+        self.rect.midbottom = self.pos
+
+        hits = self.colision(platforms)
+        # check wether to go on top of the thing you collided with
+        if self.vel.y > 0 and hits and self.pos.y <= hits[minindex(hits)].rect.bottom:
             self.vel.y = 0
+            self.pos.y = hits[minindex(hits)].rect.top + 1
 
     def move(self, info):
         if info == "right":
-            self.pos.x += self.VEL // FPS * yp // 100
-            self.direction = "right"
+            self.pos.x += block_size / 8
+            self.surface = self.img_right
         elif info == "left":
-            self.pos.x -= self.VEL // FPS * yp // 100
-            self.direction = "left"
+            self.pos.x -= block_size / 8
+            self.surface = self.img_left
 
-        if info == "jump":
-            self.vel.y = -15
-            self.pos.y -= 1
+        self.direction = info
 
         if self.pos.x > WIDTH:
-            self.pos.x = 0
-        if self.pos.x < 0:
+            self.pos.x = 0 - char_size[0]
+        if self.pos.x < -char_size[0]:
             self.pos.x = WIDTH
 
-    def draw(self, win):
-        if self.direction == "right":
-            img_to_draw = self.img_left
-        else:
-            img_to_draw = self.img_right
-        win.blit(img_to_draw, (self.pos.x, self.pos.y))
+    def jump(self, platforms):
+        hits = pygame.sprite.spritecollide(self, platforms, False)
+        if hits and self.pos.y < hits[minindex(hits)].rect.bottom:
+            self.vel.y = -20  # jump is exactly 4 blocks
+
+    def colision(self, other):
+        return pygame.sprite.spritecollide(self, other, False)
+
+
+print(block_size * 17)
+
+
+def minindex(L):
+    index, M = 0, L[0].rect.bottom
+    for i in range(len(L)):
+        if 17 * block_size > L[i].rect.bottom > M:
+            index = i
+            M = L[i]
+    return index
