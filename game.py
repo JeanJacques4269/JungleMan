@@ -1,9 +1,8 @@
-import pygame
 from constants import *
-from jungle_man import Jungleman
-from level import Platform, generate_platforms
 from ennemy import Ennemy
 from fruit import Fruit
+from jungle_man import Jungleman
+from platform import Platform, generate_platforms
 
 
 class Game:
@@ -12,7 +11,7 @@ class Game:
         self.character = Jungleman(spawn_pos)
         self.ennemy1 = Ennemy((10 * block_size, 5 * block_size), 10, 13)
         self.fruit = Fruit(fruit_pos)
-        self.ground = Platform(32, 0, 18)
+        self.ground = Platform(60, -10, 18)  # make the ground platform
         level_platforms = generate_platforms(map)
 
         self.all_sprites = pygame.sprite.Group()
@@ -28,16 +27,18 @@ class Game:
         self.fruits.add(self.fruit)
 
     def run(self):
+        """Game loop"""
+
         game_is_on = True
         clock = pygame.time.Clock()
 
         while game_is_on:
-            clock.tick(FPS)
+            clock.tick(FPS)  # Slows down the loop so it refreshes 60 times per second
             self.win.fill(WHITE)
             self.win.blit(background, (0, 0))
 
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:  # si on appuie sur la croix
+                if event.type == pygame.QUIT:  # if you push the red cross to close the window
                     game_is_on = False
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     self.character.jump(self.platforms)
@@ -54,6 +55,7 @@ class Game:
     def check_win_death(self):
         if self.character.colision(self.ennemies):
             print("die")
+            self.character.die()
         if self.character.colision(self.fruits):
             print("win")
 

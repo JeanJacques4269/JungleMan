@@ -1,10 +1,6 @@
 import pygame.math
-from level import Platform
+
 from constants import *
-
-vec = pygame.math.Vector2
-
-g = 60
 
 
 class Jungleman(pygame.sprite.Sprite):
@@ -21,15 +17,15 @@ class Jungleman(pygame.sprite.Sprite):
         self.rect = self.surface.get_rect()
 
     def update_position(self, platforms):
-        """Physics"""
-        self.acc = vec(0, 1)
+        """Fonction where we take care of physics"""
+        self.acc = vec(0, 1)  # gravity
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
         self.rect.midbottom = self.pos
 
         hits = self.colision(platforms)
         # check wether to go on top of the thing you collided with
-        if self.vel.y > 0 and hits and self.pos.y <= hits[minindex(hits)].rect.bottom:
+        if self.vel.y > 0 and hits and self.pos.y - 5 <= hits[minindex(hits)].rect.bottom:
             self.vel.y = 0
             self.pos.y = hits[minindex(hits)].rect.top + 1
 
@@ -56,8 +52,10 @@ class Jungleman(pygame.sprite.Sprite):
     def colision(self, other):
         return pygame.sprite.spritecollide(self, other, False)
 
-
-print(block_size * 17)
+    def die(self, from_what="idk"):
+        self.pos = spawn_pos * block_size
+        self.vel = vec(0, 0)
+        print(from_what)
 
 
 def minindex(L):

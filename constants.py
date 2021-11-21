@@ -1,7 +1,7 @@
-from screeninfo import get_monitors
 import pygame
-from colors import *
+from screeninfo import get_monitors
 
+# Window and display related
 main = get_monitors()[0]  # Get screens size
 for m in get_monitors()[1:]:
     if m.width > main.width:
@@ -11,9 +11,8 @@ WIDTH, HEIGHT = int(main.width * 3 / 4), int(main.width * 3 / 4 * 9 / 16)
 FPS = 60
 block_size = WIDTH / 32
 
-# game
+# Game
 vec = pygame.math.Vector2
-ACC = 5
 spawn_pos = vec(2, 15)
 fruit_pos = vec(25, 2)
 MAP = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -35,7 +34,7 @@ MAP = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-# sprites
+# Sprites
 background = pygame.transform.scale(pygame.image.load("assets/jungle.jpg"), (WIDTH, HEIGHT))
 
 img_jungleman = pygame.image.load("assets/jungleman.png")
