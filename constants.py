@@ -1,5 +1,6 @@
 import pygame
 from screeninfo import get_monitors
+from colors import *
 
 # Window and display related
 main = get_monitors()[0]  # Get screens size
