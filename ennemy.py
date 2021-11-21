@@ -9,7 +9,7 @@ class Ennemy(pygame.sprite.Sprite):
         self.direction = "right"
         self.default_speed = 1
         self.vel = vec(self.default_speed * block_size / FPS, 0)
-        self.pos = vec(pos)
+        self.pos = vec(pos) * block_size
         self.start, self.end = start, end
 
     def update_position(self):
