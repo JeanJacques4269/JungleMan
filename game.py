@@ -26,13 +26,14 @@ class Game:
         self.fruits = pygame.sprite.Group()
         self.fruits.add(self.fruit)
 
+        self.game_is_on = True
+
     def run(self):
         """Game loop"""
 
-        game_is_on = True
         clock = pygame.time.Clock()
 
-        while game_is_on:
+        while self.game_is_on:
             clock.tick(FPS)  # Slows down the loop so it refreshes 60 times per second
             self.win.fill(WHITE)
             self.win.blit(background, (0, 0))
@@ -57,6 +58,7 @@ class Game:
             print("die")
             self.character.die()
         if self.character.colision(self.fruits):
+            self.game_is_on = False
             print("win")
 
     def updated_positions(self):

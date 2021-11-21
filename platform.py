@@ -36,7 +36,6 @@ def generate_platforms(L: list):
                 n = b - a + 1  # size of the platform
                 platforms_to_return.append(Platform(n, a, i, block_size // 2))
             j += 1
-    print(len(platforms_to_return))
     return platforms_to_return
 
 
