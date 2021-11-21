@@ -9,7 +9,7 @@ for m in get_monitors()[1:]:
         main = m
 
 WIDTH, HEIGHT = int(main.width * 3 / 4), int(main.width * 3 / 4 * 9 / 16)
-FPS = 60
+FPS = 120
 block_size = WIDTH / 32
 
 # Game

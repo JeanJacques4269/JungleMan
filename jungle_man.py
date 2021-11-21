@@ -15,6 +15,7 @@ class Jungleman(pygame.sprite.Sprite):
         self.direction = "right"
         self.surface = self.img_right
         self.rect = self.surface.get_rect()
+        self.default_speed = 10  # blocks per second (there is 32 blocks horizontally)
 
     def update_position(self, platforms):
         """Fonction where we take care of physics"""
@@ -31,10 +32,10 @@ class Jungleman(pygame.sprite.Sprite):
 
     def move(self, info):
         if info == "right":
-            self.pos.x += block_size / 8
+            self.pos.x += self.default_speed * block_size / FPS
             self.surface = self.img_right
         elif info == "left":
-            self.pos.x -= block_size / 8
+            self.pos.x -= self.default_speed * block_size / FPS
             self.surface = self.img_left
 
         self.direction = info

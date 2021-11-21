@@ -40,7 +40,7 @@ class Game:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:  # if you push the red cross to close the window
-                    game_is_on = False
+                    self.game_is_on = False
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     self.character.jump(self.platforms)
             keys = pygame.key.get_pressed()
