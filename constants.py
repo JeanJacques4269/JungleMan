@@ -1,17 +1,21 @@
 import pygame
 from screeninfo import get_monitors
 from colors import *
+import platform
 
 # Window and display related
-main = get_monitors()[0]  # Get screens size
-for m in get_monitors()[1:]:
-    if m.width > main.width:
-        main = m
+if platform.system() == "Windows":
+    main = get_monitors()[0]  # Get screens size
+    for m in get_monitors()[1:]:
+        if m.width > main.width:
+            main = m
+    WIDTH, HEIGHT = main.width, main.height
+else:
+    WIDTH, HEIGHT = 1920, 1080
 
-WIDTH, HEIGHT = int(main.width * 3 / 4), int(main.width * 3 / 4 * 9 / 16)
+WIDTH, HEIGHT = int(WIDTH * 3 / 4), int(WIDTH * 3 / 4 * 9 / 16)
 FPS = 60
 block_size = WIDTH / 32
-
 # Game
 vec = pygame.math.Vector2
 spawn_pos = vec(2, 15)

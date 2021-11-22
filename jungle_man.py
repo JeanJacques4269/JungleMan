@@ -19,7 +19,7 @@ class Jungleman(pygame.sprite.Sprite):
 
     def update_position(self, platforms):
         """Fonction where we take care of physics"""
-        self.acc = vec(0, 1)  # gravity
+        self.acc = vec(0, HEIGHT / 810)  # gravity
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
         self.rect.midbottom = self.pos
@@ -56,7 +56,6 @@ class Jungleman(pygame.sprite.Sprite):
     def die(self, from_what="idk"):
         self.pos = spawn_pos * block_size
         self.vel = vec(0, 0)
-        print(from_what)
 
 
 def minindex(L):

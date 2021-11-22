@@ -2,7 +2,7 @@ from constants import *
 from ennemy import Ennemy
 from fruit import Fruit
 from jungle_man import Jungleman
-from platform import Platform, generate_platforms
+from platforms import Platform, generate_platforms
 
 
 class Game:
@@ -13,13 +13,13 @@ class Game:
         self.ennemy2 = Ennemy((21, 7), 20, 23)
         self.fruit = Fruit(fruit_pos)
         self.ground = Platform(60, -10, 18)  # make the ground platform
-        level_platforms = generate_platforms(map)
+        level_platforms = generate_platforms(map)  # generate platforms from the big matrix in constants.py
 
         self.platforms = pygame.sprite.Group()
         self.platforms.add(self.ground, *level_platforms)
 
         self.ennemies = pygame.sprite.Group()
-        self.ennemies.add(self.ennemy1, self.ennemy2)
+        self.ennemies.add(self.ennemy1, self.ennemy2)  # here you can add ennemies
 
         self.fruits = pygame.sprite.Group()
         self.fruits.add(self.fruit)
